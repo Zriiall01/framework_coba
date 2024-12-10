@@ -21,4 +21,10 @@ class JurusanModel extends Model
             ->get(['jurusan.jurusan_id', 'jurusan.nama_jrs']);
         return $query;
     }
+
+    public function mahasiswa()
+    {
+        return $this->hasMany(MahasiswaModel::class, 'jurusan_id'); // 'jurusan_id' should be the foreign key in 'mahasiswa'
+    }
+
 }

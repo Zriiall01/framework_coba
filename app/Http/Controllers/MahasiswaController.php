@@ -30,10 +30,14 @@ class MahasiswaController extends Controller
         
         $request->validate([
             'mahasiswa' => 'required',
-            'npm' => 'required',
+            'npm' => 'required|unique:mahasiswa,nim_mhs',
             'jurusan' => 'required',
             'foto'=>'required',
-            'deskripsi'=> 'required'
+            'deskripsi'=> 'required',
+            'gender' => 'required|in:L,P',
+            'tanggal_lahir' => 'required|date',
+        ], [
+            'npm' => 'NPM sudah ada di database, silakan masukkan yang lain.',
         ]);
 
         $file=$request->file('foto');
@@ -45,13 +49,15 @@ class MahasiswaController extends Controller
             'nim_mhs' => $request->npm,
             'jurusan_id' => $request->jurusan,
             'foto'=>$gambar,
-            'deskripsi'=> $request->deskripsi
+            'deskripsi'=> $request->deskripsi,
+            'gender' => $request->gender,
+            'tanggal_lahir' => $request->tanggal_lahir
         ];
 
         $file->move('gambar', $gambar);
 
         MahasiswaModel::create($data);
-        return redirect('/mahasiswa');
+        return redirect('/mahasiswa')->with('success', 'Data berhasil ditambahkan.');
     }
 
     public function upload(Request $request)
@@ -87,15 +93,25 @@ class MahasiswaController extends Controller
             'mahasiswa' => 'required',
             'npm' => 'required',
             'jurusan' => 'required',
+            'foto'=>'required',
+            'deskripsi'=> 'required',
+            'gender' => 'required|in:L,P',
+            'tanggal_lahir' => 'required|date',
         ]);
 
         $file=$request->file('foto');
         $mahasiswa = MahasiswaModel::where('mahasiswa_id', $id)->first();
+        
+        $gambar=$token.'.'.$file->getClientOriginalExtension();
 
         $data = [
             'nama_mhs' => $request->mahasiswa,
             'nim_mhs' => $request->npm,
             'jurusan_id' => $request->jurusan,
+            'foto'=>$gambar,
+            'deskripsi'=> $request->deskripsi,
+            'gender' => $request->gender,
+            'tanggal_lahir' => $request->tanggal_lahir
         ];
 
         if ($file) {

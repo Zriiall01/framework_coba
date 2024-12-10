@@ -17,6 +17,12 @@ class MahasiswaModel extends Model
     {
         $query = DB::table('mahasiswa')
             ->join('jurusan', 'mahasiswa.jurusan_id', '=', 'jurusan.jurusan_id')->get();
+            
         return $query;
+    }
+
+    public function jurusan()
+    {
+        return $this->belongsTo(JurusanModel::class, 'jurusan_id'); // Assuming 'jurusan_id' is the foreign key
     }
 }

@@ -19,9 +19,10 @@ return new class extends Migration
 
             // Definisi foreign key
             $table->foreign('jurusan_id')->references('jurusan_id')->on('jurusan');
+            $table->enum('gender', ['L', 'P'])->default('L'); // L = Laki-laki, P = Perempuan
+            $table->date('tanggal_lahir');
             $table->string('foto');
             $table->text('deskripsi');
-
             $table->timestamps();
         });
     }

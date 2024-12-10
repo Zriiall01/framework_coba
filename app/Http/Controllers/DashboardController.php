@@ -12,10 +12,16 @@ class DashboardController extends Controller
 {
     public function index()
     {
-
-        $totaljurusan1 = JurusanModel::count();
+        $totaljurusan = JurusanModel::all();
         $totalmahasiswa = MahasiswaModel::count();
-        $mahasiswa1 = MahasiswaModel::getALLmahasiswa();
-        return view('index', compact('totalmahasiswa', 'totaljurusan1','mahasiswa1'));
+        $mahasiswa = MahasiswaModel::getALLmahasiswa();
+        
+        // Gender data (assuming there's a 'gender' column in MahasiswaModel)
+        $genderCount = MahasiswaModel::selectRaw('gender, count(*) as count')
+            ->groupBy('gender')
+            ->get();
+
+        return view('index', compact('totalmahasiswa', 'totaljurusan', 'mahasiswa', 'genderCount'));
+    
     }
 }

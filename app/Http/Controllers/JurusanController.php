@@ -56,8 +56,13 @@ class JurusanController extends Controller
     }
 
     public function Hapus($id)
-    {
+{
+    try {
         JurusanModel::where('jurusan_id', $id)->delete();
-        return redirect('/jurusan');
+        return redirect('/jurusan')->with('success', 'Data berhasil dihapus.');
+    } catch (\Exception $e) {
+        return redirect('/jurusan')->with('error', 'Data tidak dapat dihapus karena sedang digunakan.');
     }
+}
+
 }

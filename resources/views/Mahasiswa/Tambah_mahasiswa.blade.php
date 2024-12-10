@@ -18,6 +18,18 @@
                         <div class="card-header text-center">
                             Tambah Mahasiswa
                         </div>
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+
                         <form class="m-2" method="post" enctype="multipart/form-data" action="">
                             @csrf
                             <div class="form-group mt-3">
@@ -44,9 +56,25 @@
                                     aria-describedby="emailHelp">
                             </div>
                             <div class="mb-3">
+                                <label>Gender:</label>
+                            </div>
+                            <div class="mb-3">
+                                <input type="radio" id="gender_L" name="gender" value="L">
+                                <label for="gender_L">Laki-laki</label>
+                                <input type="radio" id="gender_P" name="gender" value="P">
+                                <label for="gender_P">Perempuan</label>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tanggal_lahir">Tanggal Lahir:</label>
+                            </div>
+                            <div class="mb-3">
+                                <input type="date" id="tanggal_lahir" name="tanggal_lahir" required>
+                            </div>
+                            <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Deskripsi Maha</label>
                                 <textarea name="deskripsi" class="form-control" id="editor"> </textarea>
                             </div>
+                            
                             <div class="mb-3">
                                 <select class="form-select" name="jurusan" id="floatingSelect"
                                     aria-label="Floating label select example">

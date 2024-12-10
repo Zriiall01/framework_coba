@@ -20,6 +20,18 @@
                                     <h4>Jurusan</h4>
                                     <a class="btn btn-success" href="/Tambah_jrs" role="button">add</a>
                                 </div>
+                                @if (session('success'))
+                                    <div style="color: green; border: 1px solid green; padding: 10px; margin-bottom: 10px;">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
+
+                                @if (session('error'))
+                                    <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 10px;">
+                                        {{ session('error') }}
+                                    </div>
+                                @endif
+
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-bordered mb-0">

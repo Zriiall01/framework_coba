@@ -42,6 +42,27 @@
             <input type="text" value="{{  $data->nim_mhs }}" name="npm" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
+                <label>Gender:</label>
+            </div>
+            <div class="mb-3">
+                <input type="radio" id="gender_L" name="gender" value="L" 
+                    {{ old('gender', $data->gender) == 'L' ? 'checked' : '' }}>
+                <label for="gender_L">Laki-laki</label>
+                <input type="radio" id="gender_P" name="gender" value="P" 
+                    {{ old('gender', $data->gender) == 'P' ? 'checked' : '' }}>
+                <label for="gender_P">Perempuan</label>
+            </div>            
+            <div class="mb-3">
+                <label for="tanggal_lahir" >Tanggal Lahir:</label>
+            </div>
+            <div class="mb-3">
+                <input type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{ old('tanggal_lahir', $data->tanggal_lahir) }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Deskripsi Maha</label>
+                <textarea name="deskripsi" class="form-control" id="editor"> {{ old('deskripsi', $data->deskripsi) }}</textarea>
+            </div>
+            <div class="mb-3">
             <select class="form-select" name="jurusan" id="floatingSelect" aria-label="Floating label select example">
             @foreach ($jurusan as $item)
             <option value="{{ $item->jurusan_id }}">--{{$item->nama_jrs}}--</option>  
@@ -58,7 +79,18 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/ckeditor.js"></script>
     <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+                ckfinder: {
+                    uploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}"
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
         function readURL(input){
           if (input.files && input.files[0]){
             var reader = new FileReader();
